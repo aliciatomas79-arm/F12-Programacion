@@ -15,15 +15,16 @@ void bubbleSort(vector<int>& v) {
 void selectionSort(vector<int>& v) {
     int n = v.size();
     for (int i = 0; i < n - 1; i++) {
-        int m = i;
+        int min_idx = i;
         for (int j = i + 1; j < n; j++)
-            if (v[j] < v[m]) m = j;
-        swap(v[i], v[m]);
+            if (v[j] < v[min_idx]) min_idx = j;
+        swap(v[i], v[min_idx]);
     }
 }
 
 void merge(vector<int>& v, int l, int m, int r) {
-    int n1 = m - l + 1, n2 = r - m;
+    int n1 = m - l + 1;
+    int n2 = r - m;
     vector<int> L(n1), R(n2);
     for (int i = 0; i < n1; i++) L[i] = v[l + i];
     for (int j = 0; j < n2; j++) R[j] = v[m + 1 + j];
@@ -48,19 +49,17 @@ void mergeSort(vector<int>& v, int l, int r) {
 int main() {
     string algoritmo;
     int n;
-    
-    // El autograder manda: [nombre] [cantidad] [numeros...]
+    // IMPORTANTE: Leer algoritmo y luego N
     if (!(cin >> algoritmo >> n)) return 0;
-    
+
     vector<int> v(n);
-    for (int i = 0; i < n; i++) {
-        cin >> v[i];
-    }
+    for (int i = 0; i < n; i++) cin >> v[i];
 
     if (algoritmo == "burbuja") bubbleSort(v);
     else if (algoritmo == "seleccion") selectionSort(v);
     else if (algoritmo == "mergesort") mergeSort(v, 0, n - 1);
 
+    // Impresión limpia: sin espacios extra al final
     for (int i = 0; i < n; i++) {
         cout << v[i] << (i == n - 1 ? "" : " ");
     }
